@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-2">
+            Filter:
+            <input type="text" class="form-control" ng-model="vm.filter" name="Filter" id="Filter" />
+        </div>
+        <div class="col-md-6 col-sm-12" dir="rtl">
+            <span ng-if="vm.accordion !=0">
+                <button class="btn btn-primary" id="BtnExpandAll" ng-click="vm.accordion = 0">Expand all</button>
+            </span>
+            <span ng-if="vm.accordion ==0">
+                <button class="btn btn-primary" id="BtnExpandAll" ng-click="vm.accordion = -1">collapse all</button>
+            </span>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-repeat="category in vm.categoriesandSubCategories">
+                <h6 class="accordion" ng-class="{active:(vm.accordion=={{category.CategoryId}} || vm.accordion == 0)&&(vm.accordion !=-1) }">
+                    <a href ng-click="vm.accordion = category.CategoryId">&nbsp;&nbsp;{{category.CategoryName}} &nbsp;('count')</a>
+                </h6>
+                <div class="accordion-content" ng-show="(vm.accordion=={{category.CategoryId}} || vm.accordion == 0)&&(vm.accordion !=-1)">
+                    <div class="row accordion-subcontent row-striped" ng-repeat="subcategory in category.SubCategories">
+                            <div class="col-md-4 text-primary"><a href="#"> {{subcategory.SubCategoryName}}</a></div>
+                            <div class="col-md-6">{{subcategory.SubCategoryDescription}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Forms</h4>
+            <ul>
+                <li><a href="/#/form/FP5">FP5</a></li>
+                <li><a href="/#/form/SH01">SH01</a></li>
+                <li><a href="/#/form/AN">AN</a></li>
+                <li><a href="/#/form/FORMEPLUS">FORME+</a></li>
+                <li><a href="/#/form/IHT400Plus">IHT400+</a></li>
+                <li><a href="/#/form/LP1H">LP1H</a></li>
+                <li><a href="/#/form/N260">N260</a></li>
+                <li><a href="/#/form/PR8A">PR8A</a></li>
+                <li><a href="/#/form/LRTR1">LRTR1</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!--
+-->

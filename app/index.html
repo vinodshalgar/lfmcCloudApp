@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="lfmcApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="lfmcApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="lfmcApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="lfmcApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Laserform in Cloud</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">-->
+  
+  <link rel="stylesheet" href="/Contents/css/bootstrap.css">
+  <link rel="stylesheet" href="/Contents/css/form.css">
+  <link rel="stylesheet" href="/Contents/css/theme.css">
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <header class="navbar-fixed-top navbar bgWhite">
+        <div class="container">
+            <h1>
+                <img src="/Contents/image/logo.png" class="logo" />
+                <img src="/Contents/image/laserformLogo.png" class="logo floatRight hidden-sm hidden-xs" />
+            </h1>            
+        </div>
+    </header>
+
+    <div class=" navbar-fixed-top navbar navbar-default">
+        <div class="navbar-header">            
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/home">One Advanced</a>            
+            <ul class="navbar-collapse collapse nav navbar-nav" id="NavMenuLeft" name="NavMenuLeft" >
+                <li ng-repeat="menu in menuLeft"><a href="{{menu.Value}}">{{menu.Item}}</a></li>
+            </ul>
+        </div>
+
+        <ul class="navbar-collapse collapse nav navbar-nav navbar-right" id="NavMenuRight" name="NavMenuRight" >
+            <li ng-repeat="menu in menuRight"><a href="{{menu.Value}}">{{menu.Item}}</a></li>
+        </ul>
+    </div>
+  <div ng-view>
+
+
+  </div>
+   <div class="navbar-bottom navbar">
+        <div id="groupFooter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 hidden-md hidden-lg">
+                        <a href="http://www.laserformhub.legal/" target="_blank"><img src="/Contents/image/laserformLogo.png" class="logo" alt="Advanced Legal"></a>
+                    </div>
+                    <div class="col-md-offset-3 col-sm-6 text-center advancedLinks">
+                        <a href="http://www.oneadvanced.com" target="_blank">Advanced</a> |
+                        <a href="http://www.advanced-legal.co.uk/system-pages/privacy.aspx" target="_blank">Privacy Policy</a> |
+                        <a href="/AUpolicy.html" target="_blank">Acceptable Use Policy</a> |
+                        <a href="/LaserformTC.html" target="_blank">Terms and Conditions</a> |
+                        <a href="/ServiceDescription.html" target="_blank">Service Description</a>
+                        <br />
+                        © Copyright 2016-Advanced Computer Software Group Ltd |
+                        <a href="/AdvancedLegalSupportGuide.pdf" target="_blank">Support SLA</a> |
+                        <a href="/contact.html" target="_blank">Contact Us</a> |
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="app.js"></script>
+  <script src="components/login/loginCtrl.js"></script>  
+  <script src="components/Category/CategoryCtrl.js"></script> 
+  <script src="components/Forms/formCtrl.js"></script> 
+  <script src="components/home/homeCtrl.js"></script>  
+  <script src="components/services/dataService.js"></script>
+  <script src="components/services/lfmcService.js"></script>  
+  <script src="components/services/authService.js"></script>  
+  <script src="components/services/httpInteceptor.js"></script>  
+  <script src="components/layout/menuCtrl.js"></script> 
+</body>
+</html>
+ 

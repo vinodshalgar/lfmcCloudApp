@@ -1,0 +1,119 @@
+<div class="container" style="height: {{vm.pagelength}}px;margin-left:5px;width: 875px; border:1px solid #e57200 ">
+    <!-- form header page navigation -->
+    <div style="margin-left: 300px;position: absolute;top:90px;">
+        <button ng-click="vm.pageChange('fst',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+            ng-disabled="vm.pageno==vm.firstpage"><i class="glyphicon glyphicon-backward"></i></button>
+            <button ng-click="vm.pageChange('bck',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                ng-disabled="vm.pageno==vm.firstpage"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                <select ng-model="vm.pageno" ng-change="vm.pageChange('ddl',vm.pageno)">
+                <option ng-repeat="pagecount in vm.pagecounter" ng-if="pagecount.pageno>0" ng-value="pagecount.pageno" ng-selected="vm.pageno == pagecount.pageno">{{pagecount.pageno}}</option>
+            </select>
+                <button ng-click="vm.pageChange('nxt',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                    ng-disabled="vm.pageno==vm.lastpage"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                    <button ng-click="vm.pageChange('lst',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                        ng-disabled="vm.pageno==vm.lastpage"><i class="glyphicon glyphicon-forward"></i></button>
+    </div>
+
+
+    <!-- form body  -->
+    <div ng-repeat="page in vm.lpw[0].pageDetail" ng-show="(vm.pageno == page.pageNo)">
+        <label style="font-weight:500l;float: right;">Page No.{{page.pageNo}}</label>
+        <label style="border: 1px solid rgb(229, 114, 0); padding: 2px; margin-top: 2px; background-color: rgb(229, 114, 0); color: rgb(255, 255, 255); font-size: 11px; margin-left: -12px;">Form name: <b>{{vm.formname}}</b></label>
+
+        <div ng-repeat="field in page.fields track by $index">
+
+            <span class="{{field.groupid}}" ng-if="field.fieldtype=='label'" style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: {{field.fontsize}}px;font-family:{{field.fontfamily}};font-weight:{{field.textdecoration}};font-style:{{field.textdecoration}};color:{{field.color}}"
+                ng-bind-html="vm.ConvertTohtml(field)"></span>
+
+                <a ng-if="field.fieldtype=='link'" href="{{field.url}}" style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: {{field.fontsize}}px;text-decoration:{{field.textdecoration}};color:{{field.color}};"
+                    target="_blank">{{field.Description}}</a>
+
+                    <input ng-model="field.value" type="text" class="infills {{field.groupid}}" ng-if="field.fieldtype=='text'" id="{{field.id}}"
+                        name="{{field.id}}" style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: 12px;font-family: Courier New;width:{{field.width}}px;height:{{field.height}}px;"
+                        maxlength="{{field.maxchar}}" title="{{field.Description}}" />
+
+                    <textarea ng-model="field.value" class="infills {{field.groupid}}" ng-if="(field.fieldtype=='textarea' && field.isexpandable=='true')"
+                        id="{{field.id}}" name="{{field.id}}" style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: 12px;font-family: Courier New;height:{{field.height}}px;"
+                        title="{{field.Description}}" cols="{{field.maxchar}}" rows="{{field.rows}}"></textarea>
+
+                        <textarea ng-model="field.value" data-limit-rows="true" class="infills {{field.groupid}}" ng-if="(field.fieldtype=='textarea' && field.isexpandable=='false')"
+                            cols="{{field.maxchar}}" id="{{field.id}}" name="{{field.id}}" style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: 12px;font-family: Courier New;height:{{field.height}}px;"
+                            title="{{field.Description}}" rows="{{field.rows}}" maxlength="{{field.maxchar * field.rows}}"
+                            ng-keypress="field.value = vm.checkrows(field.value,field.rows)"></textarea>
+
+                            <input ng-model="field.value" type="checkbox" class="checkbox infills {{field.groupid}}" ng-if="field.fieldtype=='checkbox'"
+                                style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;width:{{field.height}}px;height:{{field.height}}px;"
+                                id="{{field.id}}" name="{{field.id}}" value="{{field.Description}}" title ="{{field.Description}}"/>
+
+                            <select ng-model="field.value" ng-if="field.fieldtype=='dropdownlist'" class="infills {{field.groupid}}" id="{{field.id}}"
+                                name="{{field.id}}" style="position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: 12px;font-family: Courier New;height:{{field.height}}px;width:{{field.width}}px;">
+                                <option ng-repeat="item in field.items" value="{{item.value}}">{{item.item}}</option>
+                                </select>
+
+                                <button ng-if="field.fieldtype=='button'" style="padding: 5px;font-size: 10px;border: none;position:absolute;top:{{field.y}}px;left:{{field.x}}px;">{{field.Description}}</button>
+
+                                <button ng-if="field.groupid>0 && field.group=='end'" class="btn btn-default {{field.groupid}}" style="padding: 5px;font-size: 10px;border: none;position:absolute;top:{{field.y}}px;left:{{(field.x*1)+field.width*1+30}}px"
+                                    ng-click="vm.addRow(page.pageNo, field.groupid, field.y)"><i class="glyphicon glyphicon-plus"></i></button>
+
+                                    <button ng-if="field.groupid<-1 && field.group=='end'" class="btn btn-default {{field.groupid}}" style="padding: 5px;font-size: 10px;border: none;position:absolute;top:{{field.y}}px;left:{{(field.x*1)+field.width*1+30}}px"
+                                        ng-click="vm.delRow(page.pageNo, field.groupid, field.y)"><i class="glyphicon glyphicon-minus"></i></button>
+
+            <span ng-if="field.fieldtype=='strikeout'" ng-model="field.value" id="{{field.id}}" name="{{field.id}}" ng-click="vm.strikeout(field.id,field.Description, page.pageNo)"
+            style="cursor:pointer;background:rgba(204, 204, 204, 0.31);z-index:100;position:absolute;top:{{field.y}}px;left:{{field.x}}px;font-size: 12px;font-family: Courier New;width:{{field.width}}px;height:{{field.height}}px;">{{field.value}}</span>
+
+        </div>
+
+
+
+        <label style="position:absolute;top:{{vm.pagelength}}px;left:0px;border: 1px solid rgb(229, 114, 0); padding: 2px; margin-top: 1px; background-color: rgb(229, 114, 0); color: rgb(255, 255, 255); font-size: 11px; margin-left: 8px;">Form name: <b>{{vm.formname}}</b></label>
+        <label style="position:absolute;top:{{vm.pagelength}}px;left:800px;font-weight:500l;">Page No.{{page.pageNo}}</label>
+    </div>
+
+
+    <!--form footer-->
+    <div class="row" style="position:absolute;top:{{vm.pagelength*1+25}}px;width:875px;border-top:1px solid #e57200">
+        <div class="col-md-4" dir="ltr">
+            <!--<button class="btn btn-default floatleft">Save</button>-->
+        </div>
+        <div class="col-md-4">
+            <button ng-click="vm.pageChange('fst',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                ng-disabled="vm.pageno==vm.firstpage"><i class="glyphicon glyphicon-backward"></i></button>
+                <button ng-click="vm.pageChange('bck',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                    ng-disabled="vm.pageno==vm.firstpage"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                    <select ng-model="vm.pageno" ng-change="vm.pageChange('ddl',vm.pageno)">
+                <option ng-repeat="pagecount in vm.pagecounter" ng-if="pagecount.pageno>0" ng-value="pagecount.pageno" ng-selected="vm.pageno == pagecount.pageno">{{pagecount.pageno}}</option>
+            </select>
+                    <button ng-click="vm.pageChange('nxt',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                        ng-disabled="vm.pageno==vm.lastpage"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                        <button ng-click="vm.pageChange('lst',vm.pageno)" class="btn btn-default" style="padding: 5px;font-size: 10px;border: none;"
+                            ng-disabled="vm.pageno==vm.lastpage"><i class="glyphicon glyphicon-forward"></i></button>
+        </div>
+        <div class="col-md-4" dir="rtl">
+            <button class="btn btn-primary floatRight" ng-click="vm.generatePDF()">Generate PDF</button>
+        </div>
+    </div>
+
+    <!--side bar -->
+    <!--<div style="height: {{vm.pagelength}}px;margin-left:5px;width: 200px; border:1px solid #e57200;position:absolute; top:82px;left:880px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" ng-model="vm.fnamequery" class="form-control" placeholder="Form name">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" ng-click="vm.formbundleAdd(vm.fnamequery)"><i class="glyphicon glyphicon-plus"></i></button>
+                    </span>
+                </div> 
+                <div style="width:100%;height:100px;">               
+                    <p class="suggestivetext" ng-repeat="fname in vm.fnames | filter:vm.fnamequery" ng-hide="vm.fnamequery=='' || vm.fnamequery == fname" ng-click="vm.fnamequery = fname">{{fname}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-repeat="form in vm.formbundle">
+            <div class="col-md-12">
+                <span ng-if="form.formname == vm.formbundleActive" ng-click="vm.formbundleActive = form.formname" style="width:100%" class="btn btn-primary">{{form.formname}}</span>
+                <span ng-if="form.formname != vm.formbundleActive" ng-click="vm.formbundleActive = form.formname" style="width:100%" class="btn btn-default">{{form.formname}}<a href=""><i class="glyphicon glyphicon-remove floatRight"></i></a></span>
+            </div>
+        </div>
+    </div>-->
+
+</div>

@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="loginPage">
+            <div class="col-md-offset-2 col-md-8">
+                <div id="loginForm" class="col-md-offset-3 col-md-6">
+                    <form name="loginForm" novalidate>
+                        <label>Username</label>
+                        <input PlaceHolder="Username" class="form-control" id="UserName" name="UserName" type="email" data-ng-model="vm.email" required/><label>Password</label>
+                        <input PlaceHolder="Password" class="form-control" id="Password" name="Password" type="password" data-ng-model="vm.password"
+                            required/>
+
+                        <div class="statusRow">
+                            <div data-ng-show="vm.errorMessage" class="alert alert-danger">
+                                <span></span>&nbsp;&nbsp;Error: {{ vm.errorMessage }}
+                            </div>
+                            <div data-ng-show="!vm.errorMessage">
+                                <br/>
+                            </div>
+                        </div>
+                        <button type="submit" id="loginButton" class="btn btn-primary" data-ng-click="vm.login()">
+                            Login
+                        </button>
+                    </form>
+                    <a class="resetPassword" href="#/RequestResetPassword">Reset my password</a>
+                </div>
+            </div>
+        </div>
+    </div>
