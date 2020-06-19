@@ -16,7 +16,7 @@ describe('lfmcApp login controller', function() {
           var data={
               recordCount:1,
               results:[{
-                  "userName":"vinod.shalgar@oneadvanced.com"
+                  "userName":"vinod.shalgar@gmail.com"
               }]
           }
           return q.when(data);
@@ -40,7 +40,7 @@ describe('lfmcApp login controller', function() {
 
   it('should authenticate valid user', function () {
         var vm = createController();
-        // vm.userName='vinod.shalgar@oneadvanced.com';
+        // vm.userName='vinod.shalgar@gmail.com';
         // vm.password='ppp';
         $scope.$apply(); //Ensure promises are resolved                                    
         expect(vm.login1()).toEqual(false);
